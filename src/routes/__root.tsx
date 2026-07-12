@@ -15,6 +15,8 @@ import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { CartProvider } from "../context/CartContext";
 import { WishlistProvider } from "../context/WishlistContext";
+import { AuthProvider } from "../context/AuthContext";
+import { OrderProvider } from "../context/OrderContext";
 import { Toaster } from "../components/ui/sonner";
 
 function NotFoundComponent() {
