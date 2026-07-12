@@ -104,7 +104,14 @@ function CheckoutPage() {
   };
 
   const placeOrder = () => {
-    const orderId = "OD" + Math.floor(100000000 + Math.random() * 900000000);
+    const orderId = saveOrder({
+      userEmail: user.email,
+      userName: user.name,
+      items,
+      address,
+      payment,
+      total: finalTotal,
+    });
     clearCart();
     navigate({ to: "/order-success", search: { id: orderId } });
   };
