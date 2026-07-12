@@ -138,6 +138,22 @@ export function Navbar() {
             <Link to="/products" className="rounded px-3 py-2 text-sm hover:bg-white/10">All Products</Link>
             <Link to="/wishlist" className="rounded px-3 py-2 text-sm hover:bg-white/10">Wishlist</Link>
             <Link to="/cart" className="rounded px-3 py-2 text-sm hover:bg-white/10">Cart</Link>
+            {isAuthenticated ? (
+              <>
+                <Link to="/orders" className="rounded px-3 py-2 text-sm hover:bg-white/10">My Orders</Link>
+                {isAdmin && (
+                  <Link to="/admin" className="rounded px-3 py-2 text-sm hover:bg-white/10">Admin Panel</Link>
+                )}
+                <button
+                  onClick={() => logout()}
+                  className="rounded px-3 py-2 text-left text-sm text-accent hover:bg-white/10"
+                >
+                  Logout ({user.name})
+                </button>
+              </>
+            ) : (
+              <Link to="/login" className="rounded px-3 py-2 text-sm hover:bg-white/10">Login / Sign up</Link>
+            )}
           </div>
         </div>
       )}
