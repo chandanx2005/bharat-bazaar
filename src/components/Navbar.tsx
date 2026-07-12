@@ -1,9 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import { Heart, ShoppingCart, User, Menu, ShoppingBag } from "lucide-react";
+import { Heart, ShoppingCart, User, Menu, ShoppingBag, LogOut, Package, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import { SearchBar } from "./SearchBar";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
+import { useAuth } from "@/context/AuthContext";
 import { CATEGORIES } from "@/data/products";
 
 function Badge({ value }: { value: number }) {
@@ -18,7 +19,9 @@ function Badge({ value }: { value: number }) {
 export function Navbar() {
   const { count } = useCart();
   const { count: wishCount } = useWishlist();
+  const { user, isAuthenticated, isAdmin, logout } = useAuth();
   const [open, setOpen] = useState(false);
+  const [userMenu, setUserMenu] = useState(false);
 
   return (
     <header className="sticky top-0 z-40 bg-brand-blue text-primary-foreground shadow-md">
@@ -36,9 +39,54 @@ export function Navbar() {
         </div>
 
         <nav className="ml-auto flex items-center gap-4 sm:gap-6">
-          <Link to="/" className="hidden items-center gap-1.5 text-sm font-semibold hover:text-accent sm:flex">
-            <User className="h-5 w-5" /> Login
-          </Link>
+          {isAuthenticated ? (
+            <div className="relative hidden sm:block">
+              <button
+                type="button"
+                onClick={() => setUserMenu((o) => !o)}
+                className="flex items-center gap-1.5 text-sm font-semibold hover:text-accent"
+              >
+                <User className="h-5 w-5" />
+                <span className="max-w-[90px] truncate">{user.name}</span>
+              </button>
+              {userMenu && (
+                <div
+                  className="absolute right-0 top-full z-50 mt-2 w-48 rounded-md border border-border bg-card py-1 text-foreground shadow-lg"
+                  onMouseLeave={() => setUserMenu(false)}
+                >
+                  <Link
+                    to="/orders"
+                    onClick={() => setUserMenu(false)}
+                    className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted"
+                  >
+                    <Package className="h-4 w-4" /> My Orders
+                  </Link>
+                  {isAdmin && (
+                    <Link
+                      to="/admin"
+                      onClick={() => setUserMenu(false)}
+                      className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted"
+                    >
+                      <ShieldCheck className="h-4 w-4" /> Admin Panel
+                    </Link>
+                  )}
+                  <button
+                    onClick={() => {
+                      logout();
+                      setUserMenu(false);
+                    }}
+                    className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-destructive hover:bg-muted"
+                  >
+                    <LogOut className="h-4 w-4" /> Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link to="/login" className="hidden items-center gap-1.5 text-sm font-semibold hover:text-accent sm:flex">
+              <User className="h-5 w-5" /> Login
+            </Link>
+          )}
           <Link to="/wishlist" className="relative flex items-center gap-1.5 text-sm font-semibold hover:text-accent">
             <span className="relative">
               <Heart className="h-5 w-5" />
@@ -90,6 +138,22 @@ export function Navbar() {
             <Link to="/products" className="rounded px-3 py-2 text-sm hover:bg-white/10">All Products</Link>
             <Link to="/wishlist" className="rounded px-3 py-2 text-sm hover:bg-white/10">Wishlist</Link>
             <Link to="/cart" className="rounded px-3 py-2 text-sm hover:bg-white/10">Cart</Link>
+            {isAuthenticated ? (
+              <>
+                <Link to="/orders" className="rounded px-3 py-2 text-sm hover:bg-white/10">My Orders</Link>
+                {isAdmin && (
+                  <Link to="/admin" className="rounded px-3 py-2 text-sm hover:bg-white/10">Admin Panel</Link>
+                )}
+                <button
+                  onClick={() => logout()}
+                  className="rounded px-3 py-2 text-left text-sm text-accent hover:bg-white/10"
+                >
+                  Logout ({user.name})
+                </button>
+              </>
+            ) : (
+              <Link to="/login" className="rounded px-3 py-2 text-sm hover:bg-white/10">Login / Sign up</Link>
+            )}
           </div>
         </div>
       )}

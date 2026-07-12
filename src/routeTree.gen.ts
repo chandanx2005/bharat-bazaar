@@ -12,9 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ProductsRouteImport } from './routes/products'
+import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as OrderSuccessRouteImport } from './routes/order-success'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CartRouteImport } from './routes/cart'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductIdRouteImport } from './routes/product.$id'
 
@@ -33,9 +36,19 @@ const ProductsRoute = ProductsRouteImport.update({
   path: '/products',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OrdersRoute = OrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OrderSuccessRoute = OrderSuccessRouteImport.update({
   id: '/order-success',
   path: '/order-success',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CheckoutRoute = CheckoutRouteImport.update({
@@ -46,6 +59,11 @@ const CheckoutRoute = CheckoutRouteImport.update({
 const CartRoute = CartRouteImport.update({
   id: '/cart',
   path: '/cart',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -61,9 +79,12 @@ const ProductIdRoute = ProductIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/login': typeof LoginRoute
   '/order-success': typeof OrderSuccessRoute
+  '/orders': typeof OrdersRoute
   '/products': typeof ProductsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/wishlist': typeof WishlistRoute
@@ -71,9 +92,12 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/login': typeof LoginRoute
   '/order-success': typeof OrderSuccessRoute
+  '/orders': typeof OrdersRoute
   '/products': typeof ProductsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/wishlist': typeof WishlistRoute
@@ -82,9 +106,12 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/login': typeof LoginRoute
   '/order-success': typeof OrderSuccessRoute
+  '/orders': typeof OrdersRoute
   '/products': typeof ProductsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/wishlist': typeof WishlistRoute
@@ -94,9 +121,12 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/cart'
     | '/checkout'
+    | '/login'
     | '/order-success'
+    | '/orders'
     | '/products'
     | '/sitemap.xml'
     | '/wishlist'
@@ -104,9 +134,12 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
     | '/cart'
     | '/checkout'
+    | '/login'
     | '/order-success'
+    | '/orders'
     | '/products'
     | '/sitemap.xml'
     | '/wishlist'
@@ -114,9 +147,12 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/cart'
     | '/checkout'
+    | '/login'
     | '/order-success'
+    | '/orders'
     | '/products'
     | '/sitemap.xml'
     | '/wishlist'
@@ -125,9 +161,12 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   CartRoute: typeof CartRoute
   CheckoutRoute: typeof CheckoutRoute
+  LoginRoute: typeof LoginRoute
   OrderSuccessRoute: typeof OrderSuccessRoute
+  OrdersRoute: typeof OrdersRoute
   ProductsRoute: typeof ProductsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   WishlistRoute: typeof WishlistRoute
@@ -157,11 +196,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/orders': {
+      id: '/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof OrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/order-success': {
       id: '/order-success'
       path: '/order-success'
       fullPath: '/order-success'
       preLoaderRoute: typeof OrderSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/checkout': {
@@ -176,6 +229,13 @@ declare module '@tanstack/react-router' {
       path: '/cart'
       fullPath: '/cart'
       preLoaderRoute: typeof CartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -197,9 +257,12 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   CartRoute: CartRoute,
   CheckoutRoute: CheckoutRoute,
+  LoginRoute: LoginRoute,
   OrderSuccessRoute: OrderSuccessRoute,
+  OrdersRoute: OrdersRoute,
   ProductsRoute: ProductsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   WishlistRoute: WishlistRoute,
@@ -208,13 +271,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

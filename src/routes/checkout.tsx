@@ -2,6 +2,8 @@ import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Check, MapPin, CreditCard, ClipboardList } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
+import { useOrders } from "@/context/OrderContext";
 import { formatINR } from "@/data/products";
 
 export const Route = createFileRoute("/checkout")({
@@ -41,11 +43,30 @@ const STEPS = [
 
 function CheckoutPage() {
   const { items, clearCart } = useCart();
+  const { user, isAuthenticated } = useAuth();
+  const { placeOrder: saveOrder } = useOrders();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [address, setAddress] = useState<Address>(emptyAddress);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [payment, setPayment] = useState("Cash on Delivery");
+
+  if (!isAuthenticated) {
+    return (
+      <div className="mx-auto max-w-md px-4 py-20 text-center">
+        <h1 className="text-xl font-bold text-foreground">Please login to checkout</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          You need an account to place an order and track it.
+        </p>
+        <button
+          onClick={() => navigate({ to: "/login" })}
+          className="mt-6 rounded-md bg-brand-blue px-6 py-2.5 text-sm font-bold text-primary-foreground hover:bg-brand-blue-dark"
+        >
+          Login to Continue
+        </button>
+      </div>
+    );
+  }
 
   const totalPrice = items.reduce((s, i) => s + i.product.price * i.qty, 0);
   const totalMRP = items.reduce((s, i) => s + i.product.originalPrice * i.qty, 0);
@@ -83,7 +104,14 @@ function CheckoutPage() {
   };
 
   const placeOrder = () => {
-    const orderId = "OD" + Math.floor(100000000 + Math.random() * 900000000);
+    const orderId = saveOrder({
+      userEmail: user.email,
+      userName: user.name,
+      items,
+      address,
+      payment,
+      total: finalTotal,
+    });
     clearCart();
     navigate({ to: "/order-success", search: { id: orderId } });
   };
