@@ -19,7 +19,9 @@ function Badge({ value }: { value: number }) {
 export function Navbar() {
   const { count } = useCart();
   const { count: wishCount } = useWishlist();
+  const { user, isAuthenticated, isAdmin, logout } = useAuth();
   const [open, setOpen] = useState(false);
+  const [userMenu, setUserMenu] = useState(false);
 
   return (
     <header className="sticky top-0 z-40 bg-brand-blue text-primary-foreground shadow-md">
