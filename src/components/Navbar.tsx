@@ -1,9 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import { Heart, ShoppingCart, User, Menu, ShoppingBag } from "lucide-react";
+import { Heart, ShoppingCart, User, Menu, ShoppingBag, LogOut, Package, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import { SearchBar } from "./SearchBar";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
+import { useAuth } from "@/context/AuthContext";
 import { CATEGORIES } from "@/data/products";
 
 function Badge({ value }: { value: number }) {
