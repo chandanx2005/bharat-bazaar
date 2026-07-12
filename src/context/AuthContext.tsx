@@ -7,13 +7,13 @@ const SEED_USERS = [
   { name: "Customer", email: "customer@shopease.in", password: "customer123", role: "customer" },
 ];
 
-const AuthContext = createContext(null);
+const AuthContext = createContext<any>(null);
 const USERS_KEY = "shopease_users";
 const SESSION_KEY = "shopease_session";
 
-export function AuthProvider({ children }) {
-  const [users, setUsers] = useState(SEED_USERS);
-  const [user, setUser] = useState(null); // logged-in user (without password)
+export function AuthProvider({ children }: any) {
+  const [users, setUsers] = useState<any[]>(SEED_USERS);
+  const [user, setUser] = useState<any>(null); // logged-in user (without password)
 
   // load persisted users + session
   useEffect(() => {
@@ -23,7 +23,7 @@ export function AuthProvider({ children }) {
         const parsed = JSON.parse(rawUsers);
         // always keep seed accounts available
         const merged = [...SEED_USERS];
-        for (const u of parsed) {
+        for (const u of parsed as any[]) {
           if (!merged.some((m) => m.email === u.email)) merged.push(u);
         }
         setUsers(merged);
@@ -43,7 +43,7 @@ export function AuthProvider({ children }) {
     }
   }, [users]);
 
-  const persistSession = (u) => {
+  const persistSession = (u: any) => {
     setUser(u);
     try {
       if (u) localStorage.setItem(SESSION_KEY, JSON.stringify(u));
@@ -53,7 +53,7 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const login = (email, password) => {
+  const login = (email: string, password: string) => {
     const found = users.find(
       (u) => u.email.toLowerCase() === email.trim().toLowerCase() && u.password === password,
     );
@@ -66,7 +66,7 @@ export function AuthProvider({ children }) {
     return true;
   };
 
-  const signup = (name, email, password) => {
+  const signup = (name: string, email: string, password: string) => {
     const exists = users.some((u) => u.email.toLowerCase() === email.trim().toLowerCase());
     if (exists) {
       toast.error("An account with this email already exists");

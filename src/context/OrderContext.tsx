@@ -1,11 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 // Fake orders saved to localStorage. Customers see their own; admin sees all.
-const OrderContext = createContext(null);
+const OrderContext = createContext<any>(null);
 const STORAGE_KEY = "shopease_orders";
 
-export function OrderProvider({ children }) {
-  const [orders, setOrders] = useState([]);
+export function OrderProvider({ children }: any) {
+  const [orders, setOrders] = useState<any[]>([]);
 
   useEffect(() => {
     try {
@@ -25,13 +25,13 @@ export function OrderProvider({ children }) {
   }, [orders]);
 
   // create a fake order and return its id
-  const placeOrder = ({ userEmail, userName, items, address, payment, total }) => {
+  const placeOrder = ({ userEmail, userName, items, address, payment, total }: any) => {
     const id = "OD" + Math.floor(100000000 + Math.random() * 900000000);
     const order = {
       id,
       userEmail,
       userName,
-      items: items.map((i) => ({
+      items: items.map((i: any) => ({
         id: i.product.id,
         name: i.product.name,
         image: i.product.image,
@@ -48,7 +48,7 @@ export function OrderProvider({ children }) {
     return id;
   };
 
-  const ordersFor = (email) => orders.filter((o) => o.userEmail === email);
+  const ordersFor = (email: string) => orders.filter((o: any) => o.userEmail === email);
 
   return (
     <OrderContext.Provider value={{ orders, placeOrder, ordersFor }}>
