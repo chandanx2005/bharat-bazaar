@@ -2,6 +2,8 @@ import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Check, MapPin, CreditCard, ClipboardList } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
+import { useOrders } from "@/context/OrderContext";
 import { formatINR } from "@/data/products";
 
 export const Route = createFileRoute("/checkout")({
