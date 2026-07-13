@@ -8,9 +8,9 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "ShopEase India — Big Saving Days, Up to 70% Off" },
       { name: "description", content: "Shop top deals on electronics, mobiles, fashion, shoes and home essentials. Up to 70% off with free delivery. Prices in ₹." },
-      { property: "og:title", content: "ShopEase India — Big Saving Days" },
-      { property: "og:description", content: "Up to 70% off on electronics, fashion and home essentials." },
-      { property: "og:image", content: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1200&q=80" },
+      { property: "og:title", content: "ShopEase India — Big Saving Days, Up to 70% Off" },
+      { property: "og:description", content: "Shop top deals on electronics, mobiles, fashion, shoes and home essentials. Up to 70% off with free delivery. Prices in ₹." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/3e8d47c3-6145-4280-8b8c-bc63120fef96" },
     ],
   }),
   component: Home,
